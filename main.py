@@ -104,11 +104,31 @@ class Game:
             #         self.player.move(dy=-1)
             #     if event.key == pg.K_DOWN:
             #         self.player.move(dy=1)
+                
+    def show_start_screen(self):
+        self.screen.fill(BGCOLOR)
+        self.draw_text(self.screen, "Press any key to start, if you dare!", 24, WHITE, WIDTH/2 - 32, 2)
+        pg.display.flip()
+        self.wait_for_key()
+            # made loss screen
+    
+
+    def wait_for_key(self):
+        waiting = True
+        while waiting:
+            self.clock.tick(FPS)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    waiting = False
+                    self.quit()
+                if event.type == pg.KEYUP:
+                    waiting = False
 # Instantiate the game... 
 g = Game()
+
 # use game method run to run
-# g.show_start_screen()
+g.show_start_screen()
 while True:
     g.new()
     g.run()
-    # g.show_go_screen()
+    g.show_go_screen()
