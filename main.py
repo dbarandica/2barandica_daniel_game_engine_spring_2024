@@ -1,6 +1,5 @@
 # This file was created by: Daniel Barandica
 # Code from course code files
-
 # import libraries and modules
 import pygame as pg
 from settings import *
@@ -8,8 +7,6 @@ from sprites import *
 from random import randint
 import sys
 from os import path
-
-
 # Define game class...
 class Game:
     # Define a special method to init the properties of said class...
@@ -34,7 +31,6 @@ class Game:
             for line in f:
                 print(line)
                 self.map_data.append(line)
-
     # Create run method which runs the whole GAME
     def new(self):
         print("create new game...")
@@ -42,6 +38,7 @@ class Game:
         self.walls = pg.sprite.Group()
         self.coins = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
+        self.superspeeds = pg.sprite.Group()
         # self.player1 = Player(self, 1, 1)
         # for x in range(10, 20):
         #     Wall(self, x, 5)
@@ -58,6 +55,9 @@ class Game:
                     Coin(self, col, row)
                 if tile == 'm':
                     Mob(self,col,row)
+                if tile == 'K':
+                    SUPERSPEED(self,col,row)
+
 
     def run(self):
         # 
@@ -70,7 +70,6 @@ class Game:
     def quit(self):
          pg.quit()
          sys.exit()
-
     def update(self):
         self.all_sprites.update()
     
@@ -91,9 +90,7 @@ class Game:
             self.draw_grid()
             self.all_sprites.draw(self.screen)
             self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
-
             pg.display.flip()
-
     def events(self):
          for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -107,7 +104,6 @@ class Game:
             #         self.player.move(dy=-1)
             #     if event.key == pg.K_DOWN:
             #         self.player.move(dy=1)
-
 # Instantiate the game... 
 g = Game()
 # use game method run to run
