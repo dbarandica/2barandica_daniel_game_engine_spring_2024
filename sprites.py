@@ -1,10 +1,8 @@
 # This file was created by: Daniel Barandica
 # Code from course code files
-
 # This code was inspired by Zelda and informed by Chris Bradfield
 import pygame as pg
 from settings import *
-
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
@@ -33,12 +31,10 @@ class Player(pg.sprite.Sprite):
         if self.vx != 0 and self.vy != 0:
             self.vx *= 0.7071
             self.vy *= 0.7071
-
     # def move(self, dx=0, dy=0):
     #     if not self.collide_with_walls(dx, dy):
     #         self.x += dx
     #         self.y += dy
-
     # def collide_with_walls(self, dx=0, dy=0):
     #     for wall in self.game.walls:
     #         if wall.x == self.x + dx and wall.y == self.y + dy:
@@ -70,6 +66,9 @@ class Player(pg.sprite.Sprite):
         if hits:
             if str(hits[0].__class__.__name__) == "Coin":
                 self.moneybag += 1
+            if str(hits[0].__class__.__name__) == "SUPERSPEED":
+                # global PLAYER_SPEED
+                PLAYER_SPEED = 600
 
     def update(self):
         self.get_keys()
@@ -82,12 +81,12 @@ class Player(pg.sprite.Sprite):
         # add collision later
         self.collide_with_walls('y')
         self.collide_with_group(self.game.coins, True)
+        self.collide_with_group(self.game.superspeeds, True)
           
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
         #     print("I got a coin")
        
-
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
@@ -100,7 +99,6 @@ class Wall(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-
 class Coin(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.coins
@@ -113,7 +111,7 @@ class Coin(pg.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-        
+
 
 class Mob(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -159,3 +157,17 @@ class Mob(pg.sprite.Sprite):
         self.collide_with_walls('x')
         self.rect.y = self.y
         self.collide_with_walls('y')
+
+
+class SUPERSPEED(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites, game.superspeeds
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(PINK)
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
