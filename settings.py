@@ -20,7 +20,7 @@ YELLOW = (255,255,0)
 LIGHTGREY = (75,75,75)
 RED = (255,0,0)
 PINK = (255,0,255)
-
+PURPLE= (160, 32, 240)
 
 # Player settings
 PLAYER_SPEED = 300
